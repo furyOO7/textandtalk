@@ -1,12 +1,8 @@
 .App{
   width: 100vw;
   height: 100vh;
-}
-.main-container{
-  width: 500px;
-  height: 250px;
-  top: 15%;
-  left: 32%;
-  background-color: #e0eceb9c;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+    align-items: center;
+    margin: 10px;
 }

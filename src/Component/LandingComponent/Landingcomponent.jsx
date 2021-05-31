@@ -1,11 +1,17 @@
+
 import React, { useState, useEffect } from 'react';
-import { Form, FormControl, InputGroup, Button } from 'react-bootstrap';
+import { Form, FormControl, InputGroup, Button, Container, Row, Col, Alert } from 'react-bootstrap';
 import './landingcomponent.css'
 
 const LandingComponent = (props) => {
 	const [ allcountrycode, setAllcountrycode ] = useState([]);
 	const [ countrycode, setcountrycode ] = useState('+91');
 	const [ number, setNumber ] = useState('');
+    const [show, setShow] = useState({
+        status: false,
+        message: ''
+    });
+
 	useEffect(() => {
 		// console.log(props.countryCode.length, props.countryCode);
 		if (props.countryCode.length) {
@@ -14,29 +20,49 @@ const LandingComponent = (props) => {
 	}, []);
     const numberhandler =(e) =>{
         e.persist()
+        if(show.status){
+            setShow({
+                status: false,
+                message: ''
+            })
+        }
         if(e.target.value && (e.target.value >=0 || e.target.value <=9)){
             setNumber(e.target.value)
         }else{
             if(number.length && e.target.value === ''){
                 setNumber('')
             }else{
-                alert('Wrong data')
+                setShow({
+                    status: true,
+                    message: 'Please enter number only'
+                })
             }
         }
-        console.log(number);
+        // console.log(number);
     } 
     const hitapihandler =(e) => {
         e.preventDefault();
-        console.log(number.length);
+        if(show.status){
+            setShow({
+                status: false,
+                message: ''
+            })
+        }
+        // console.log(number.length);
         if(number.length === 10){
             window.open(`https://wa.me/${countrycode}${number}`)
-            
         }else{
-            alert('Something is not right, Kindy enter the number again')
+            setShow({
+                status: true,
+                message: 'Something is not right, Kindly enter the number again'
+            })
         }
     }
 	return (
-		<div className="inner-container">
+        <React.Fragment>
+		<Container >
+            <Row className="justify-content-md-center mt-4">
+                <Col  xs lg>
 			<Form>
 				{/* <Form.Group controlId="formcountrycode" /> */}
 				<Form.Group controlId="formnumber">
@@ -54,7 +80,16 @@ const LandingComponent = (props) => {
                     </div>
 				</Form.Group>
 			</Form>
-		</div>
+            </Col>
+            </Row>
+		</Container>
+        {
+            show.status ? <Alert variant="danger" onClose={() => setShow(false)} dismissible>
+            <Alert.Heading>{show.message}</Alert.Heading>
+          </Alert> : ''
+        }
+        
+        </React.Fragment>
 	);
 };
 
