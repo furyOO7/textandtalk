@@ -12,13 +12,13 @@ const LandingComponent = (props) => {
         message: ''
     });
 
-	useEffect(() => {
-		// console.log(props.countryCode.length, props.countryCode);
-		if (props.countryCode.length) {
-			setAllcountrycode(props.countryCode);
-		}
-	}, []);
-    const numberhandler =(e) =>{
+	// useEffect(() => {
+	// 	// console.log(props.countryCode.length, props.countryCode);
+	// 	if (props.countryCode.length) {
+	// 		setAllcountrycode(props.countryCode);
+	// 	}
+	// }, []);
+    const numberhandler = (e) =>{
         e.persist()
         if(show.status){
             setShow({
@@ -34,35 +34,37 @@ const LandingComponent = (props) => {
             }else{
                 setShow({
                     status: true,
-                    message: 'Please enter number only'
+                    message: 'Kindly enter numbers only'
                 })
             }
         }
         // console.log(number);
     } 
     const hitapihandler =(e) => {
+        e.persist()
         e.preventDefault();
+        let trimNumber = number.trim();
         if(show.status){
             setShow({
                 status: false,
                 message: ''
             })
         }
-        // console.log(number.length);
-        if(number.length === 10){
-            window.open(`https://wa.me/${countrycode}${number}`)
+        if(trimNumber.length === 10){
+            window.open(`https://wa.me/${countrycode}${trimNumber}`)
+            setNumber('')
         }else{
             setShow({
                 status: true,
-                message: 'Something is not right, Kindly enter the number again'
+                message: 'Uhho, Kindly enter the number again!!'
             })
         }
     }
 	return (
         <React.Fragment>
 		<Container >
-            <Row className="justify-content-md-center mt-4">
-                <Col  xs lg>
+            <Row className="justify-content-md-center m-1">
+                <Col xs lg>
 			<Form>
 				{/* <Form.Group controlId="formcountrycode" /> */}
 				<Form.Group controlId="formnumber">
@@ -70,7 +72,7 @@ const LandingComponent = (props) => {
 						<InputGroup.Prepend>
 							<InputGroup.Text id="inputGroup-sizing-lg">{countrycode}</InputGroup.Text>
 						</InputGroup.Prepend>
-						<FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" onChange={numberhandler} value={number} placeholder="Enter number"/>
+						<FormControl aria-label="Large" aria-describedby="inputGroup-sizing-sm" onChange={numberhandler} value={number} placeholder="Enter number" autoComplete="off"/>
 					</InputGroup>
                     
 				</Form.Group>

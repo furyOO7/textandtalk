@@ -4,5 +4,6 @@
   display: flex;
   flex-direction: column;
     align-items: center;
-    margin: 10px;
+    background-color: #c3c0c052;
+    margin: 0;
 }
