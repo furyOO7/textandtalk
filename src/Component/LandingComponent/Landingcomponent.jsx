@@ -29,7 +29,7 @@ const LandingComponent = (props) => {
         e.preventDefault();
         console.log(number.length);
         if(number.length === 10){
-            window.open(`https://wa.me/${number}`)
+            window.open(`https://wa.me/${countrycode}${number}`)
             
         }else{
             alert('Something is not right, Kindy enter the number again')
